@@ -10,18 +10,24 @@ func worker(workerID int, data chan int) {
 		fmt.Printf("Worker %d recebeu %d\n", workerID, x)
 		time.Sleep(time.Second)
 	}
-
 }
 
 func main() {
-	canal := make(chan int)
-	qtdWorker := 5
+	var qtdWorker, qtdExecutions int
 
-	for i := range qtdWorker {
+	fmt.Print("Digite a quantidade de workers: ")
+	fmt.Scan(&qtdWorker)
+
+	fmt.Print("Digite a quantidade de execuções: ")
+	fmt.Scan(&qtdExecutions)
+	
+	canal := make(chan int)
+
+	for i := 1; i <= qtdWorker; i++ {
 		go worker(i, canal)
 	}
 
-	for i := range 10 {
+	for i := 0; i < qtdExecutions; i++ {
 		canal <- i
 	}
 }
